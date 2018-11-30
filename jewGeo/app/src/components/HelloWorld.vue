@@ -58,10 +58,18 @@ export default {
   }, 
   methods: {
     getGeoData() {
-        axios.get(this.awsGeoLambda).then(res => {
-          this.apiData = res
-        })
-    },
+        // WORKING AXIOS CALL
+        // axios.get(this.awsGeoLambda).then(res => {
+        //   this.apiData = res
+        // })
+
+      return new Promise((res, rej) => {
+        api.axiosCall().then(resp => {
+          this.apiData = resp
+          res(resp);
+        });
+      })
+    }
   },
   created: function(){
     this.getGeoData();
