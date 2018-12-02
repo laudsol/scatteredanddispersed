@@ -1,8 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <div>{{ apiData }}</div>
-    <div>{{ info }}</div>
+    <div>{{ geoData }}</div>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -35,7 +33,6 @@
 <script>
 /* eslint-disable */
 import * as api from '../services/api.js';
-import axios from 'axios'
 
 export default {
   name: 'HelloWorld',
@@ -44,29 +41,15 @@ export default {
   },
   data() {
     return {
-      apiData: 'Hello This is the api data value',
-      info: 'Info Data',
-      awsGeoLambda: 'https://9x969kf0l4.execute-api.us-east-2.amazonaws.com/default/getGeographicAndHistoricData',
-      coin: 'https://api.coindesk.com/v1/bpi/currentprice.json'
+      geoData: {},
     }
   },
-  computed: {
-    apiValue1() {
-      return 'hello'
-      // return this.getGeoData()
-    }
-  }, 
   methods: {
     getGeoData() {
-        // WORKING AXIOS CALL
-        // axios.get(this.awsGeoLambda).then(res => {
-        //   this.apiData = res
-        // })
-
-      return new Promise((res, rej) => {
-        api.axiosCall().then(resp => {
-          this.apiData = resp
-          res(resp);
+      return new Promise((resolve, reject) => {
+        api.getGeoDataFromAWS().then(data => {
+          this.geoData = data
+          resolve(data);
         });
       })
     }
