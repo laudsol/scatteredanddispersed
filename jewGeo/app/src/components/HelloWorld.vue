@@ -33,11 +33,15 @@
 
 <script>
 /* eslint-disable */
-import * as api from '../services/api.js';
 import dotenv from 'dotenv';
+import * as api from '../services/api.js';
+import GoogleMaps from './GoogleMaps.vue';
 
 export default {
   name: 'HelloWorld',
+  component: {
+    GoogleMaps
+  },
   props: {
     msg: String
   },
