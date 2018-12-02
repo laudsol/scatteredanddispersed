@@ -41,15 +41,17 @@ export default {
   },
   data() {
     return {
-      geoData: {},
+      geoData: [],
     }
   },
   methods: {
     getGeoData() {
       return new Promise((resolve, reject) => {
-        api.getGeoDataFromAWS().then(data => {
-          this.geoData = data
-          resolve(data);
+        api.getGeoDataFromAWS().then(response => {
+          if(response && response.data){
+            this.geoData = response.data;
+          }
+          resolve(response);
         });
       })
     }
