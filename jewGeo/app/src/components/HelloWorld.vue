@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <div>GEO DATA {{ geoData }}</div>
+    <div>LatLong Data {{latLongData}}</div>
     <MapBox></MapBox>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
@@ -48,6 +49,7 @@ export default {
   data() {
     return {
       geoData: [],
+      latLongData: '',
       apiKey: process.env.VUE_APP_GOOGLE_MAPS_API_KEY
     }
   },
@@ -61,10 +63,21 @@ export default {
           resolve(response);
         });
       })
+    },
+    getLatLong(){
+      return new Promise((resolve, reject) => {
+        const address  = 'address=1600+Amphitheatre+Parkway,+Mountain+View,+CA'
+        api.convertLocationstToLatLong(address, this.apiKey).then(response => {
+          let latLongObj = response.data.results[0].geometry.location
+          this.latLongData = latLongObj
+          resolve(response)
+        })
+      })
     }
   },
   created: function(){
     this.getGeoData();
+    this.getLatLong();
   }
 }
 </script>
