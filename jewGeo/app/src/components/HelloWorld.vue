@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <!-- <div>GEO DATA {{geoData1}}</div> -->
+    <div>GEO DATA {{geoData1}}</div>
     <div>LatLong Data {{latLongData}}</div>
     <MapBox></MapBox>
     <p>
