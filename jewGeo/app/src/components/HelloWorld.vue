@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div>GEO DATA {{ geoData }}</div>
+    <!-- <div>GEO DATA {{geoData1}}</div> -->
     <div>LatLong Data {{latLongData}}</div>
     <MapBox></MapBox>
     <p>
@@ -37,6 +37,7 @@
 import dotenv from 'dotenv';
 import * as api from '../services/api.js';
 import MapBox from './MapBox.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'HelloWorld',
@@ -52,6 +53,9 @@ export default {
       latLongData: '',
       apiKey: process.env.VUE_APP_GOOGLE_MAPS_API_KEY
     }
+  },
+  computed: {
+    ...mapState(['geoData1'])
   },
   methods: {
     getGeoData() {
@@ -78,6 +82,7 @@ export default {
   created: function(){
     this.getGeoData();
     this.getLatLong();
+    debugger;
   }
 }
 </script>

@@ -7,8 +7,8 @@
         name: 'MapBox',
         methods: {
             setMapData() {
-               const element = document.getElementById("the-one-true-map")
-                const options = {
+                const element = document.getElementById("the-one-true-map")
+                    const options = {
                     zoom: 3,
                     center: {lat: -28.024, lng: 140.887}
                 }
