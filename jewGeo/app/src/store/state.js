@@ -1,5 +1,5 @@
 const state = {
-    geoData1: 'some data here'
+    geoData: ['empty array']
 }
 
 export default {...state}

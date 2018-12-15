@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div>GEO DATA {{geoData1}}</div>
+    <div>GEO DATA {{geoData}}</div>
     <div>LatLong Data {{latLongData}}</div>
     <MapBox></MapBox>
     <p>
@@ -37,7 +37,7 @@
 import dotenv from 'dotenv';
 import * as api from '../services/api.js';
 import MapBox from './MapBox.vue';
-import { mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'HelloWorld',
@@ -49,20 +49,24 @@ export default {
   },
   data() {
     return {
-      geoData: [],
+      geoDataOLD: [],
       latLongData: '',
       apiKey: process.env.VUE_APP_GOOGLE_MAPS_API_KEY
     }
   },
   computed: {
-    ...mapState(['geoData1'])
+    ...mapState(['geoData'])
   },
   methods: {
+    ...mapMutations({
+      setGeoData: 'SET_GEO_DATA'
+      }),
     getGeoData() {
+      this.setGeoData(['new array']);
       return new Promise((resolve, reject) => {
         api.getGeoDataFromAWS().then(response => {
           if(response && response.data){
-            this.geoData = response.data;
+            this.geoDataOLD = response.data;
           }
           resolve(response);
         });
