@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div>GEO DATA {{geoData}}</div>
+    <div>GEO DATA {{geoData }}</div>
     <div>LatLong Data {{latLongData}}</div>
     <MapBox></MapBox>
     <p>
@@ -37,7 +37,7 @@
 import dotenv from 'dotenv';
 import * as api from '../services/api.js';
 import MapBox from './MapBox.vue';
-import { mapMutations, mapState } from 'vuex';
+import { mapMutations, mapState, mapActions } from 'vuex';
 
 export default {
   name: 'HelloWorld',
@@ -61,16 +61,25 @@ export default {
     ...mapMutations({
       setGeoData: 'SET_GEO_DATA'
       }),
-    getGeoData() {
+      ...mapActions({
+        getGeoData: 'GET_GEO_DATA'
+      }),
+    callGeoData() {
       this.setGeoData(['new array']);
-      return new Promise((resolve, reject) => {
-        api.getGeoDataFromAWS().then(response => {
-          if(response && response.data){
-            this.geoDataOLD = response.data;
-          }
-          resolve(response);
-        });
+      this.getGeoData().then(res => {
+        if(res && res.data) {
+          this.setGeoData(res.data)
+        }
       })
+
+      // return new Promise((resolve, reject) => {
+      //   api.getGeoDataFromAWS().then(response => {
+      //     if(response && response.data){
+      //       this.geoDataOLD = response.data;
+      //     }
+      //     resolve(response);
+      //   });
+      // })
     },
     getLatLong(){
       return new Promise((resolve, reject) => {
@@ -84,9 +93,8 @@ export default {
     }
   },
   created: function(){
-    this.getGeoData();
+    this.callGeoData();
     this.getLatLong();
-    debugger;
   }
 }
 </script>
