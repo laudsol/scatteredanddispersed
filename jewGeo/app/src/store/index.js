@@ -14,8 +14,12 @@ export const mutations = {
 }
 
 export const actions = {
-	[GET_GEO_DATA](context, payload) {
+	[GET_GEO_DATA]() {
 		return api.getGeoDataFromAWS()
+	},
+	[GET_GEO_CODING](context, inputs) {
+		return api.getGeoCodedData(inputs)
+		// output for lat/long is data.results[0].geometry.location.lat/long
 	}
 }
 

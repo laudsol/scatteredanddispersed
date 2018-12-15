@@ -7,9 +7,9 @@ module.exports = {
     getGeoDataFromAWS: function(){
         return axios.get(awsGeoLambda).then(res => res);
     },
-    convertLocationstToLatLong: function(address, key){
-        const keyString = '&key='+key
-        const url = googleGeocoding+address+keyString
+    getGeoCodedData: function(inputs){
+        const keyString = '&key='+inputs.key
+        const url = googleGeocoding+inputs.address+keyString
         return axios.get(url).then(res => res);
     }
 }

@@ -62,33 +62,24 @@ export default {
       setGeoData: 'SET_GEO_DATA'
       }),
       ...mapActions({
-        getGeoData: 'GET_GEO_DATA'
+        getGeoData: 'GET_GEO_DATA',
+        getGeoCoding: 'GET_GEO_CODING'
       }),
     callGeoData() {
-      this.setGeoData(['new array']);
       this.getGeoData().then(res => {
         if(res && res.data) {
           this.setGeoData(res.data)
         }
       })
-
-      // return new Promise((resolve, reject) => {
-      //   api.getGeoDataFromAWS().then(response => {
-      //     if(response && response.data){
-      //       this.geoDataOLD = response.data;
-      //     }
-      //     resolve(response);
-      //   });
-      // })
     },
     getLatLong(){
-      return new Promise((resolve, reject) => {
-        const address  = 'address=1600+Amphitheatre+Parkway,+Mountain+View,+CA'
-        api.convertLocationstToLatLong(address, this.apiKey).then(response => {
-          let latLongObj = response.data.results[0].geometry.location
-          this.latLongData = latLongObj
-          resolve(response)
-        })
+      const address  = 'address=1600+Amphitheatre+Parkway,+Mountain+View,+CA'
+
+      this.getGeoCoding({
+        address,
+        key: this.apiKey
+      }).then(res => {
+        this.latLongData = res
       })
     }
   },
