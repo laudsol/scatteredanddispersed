@@ -81,7 +81,7 @@ export default {
               address,
               key: this.apiKey
             }).then(res => {
-              dataPoint.coordinates = res.data.results[0].geometry.location
+                dataPoint.coordinates = res.data.results[0].geometry.location
             })
           }
           resolve(dataPoint)
@@ -92,16 +92,6 @@ export default {
       Promise.all(geoCodedData).then(res => {
         this.setGeoData(res)
       })
-
-      // const address  = 'address=, Mountain View, , USA'
-
-      // this.getGeoCoding({
-      //   address,
-      //   key: this.apiKey
-      // }).then(res => {
-      //   this.latLongData = res.data.results[0].geometry.location
-      // })
-
     }
   },
   created: function(){
