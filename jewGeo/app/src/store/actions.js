@@ -1,3 +1,2 @@
 export const GET_GEO_DATA = 'GET_GEO_DATA'
-export const GET_GOOGLE_MAPS = 'GET_GOOGLE_MAPS'
 export const GET_GEO_CODING = 'GET_GEO_CODING'

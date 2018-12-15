@@ -1,8 +1,7 @@
 <template>
   <div class="hello">
-    <div>GEO DATA {{geoData }}</div>
-    <div>LatLong Data {{latLongData}}</div>
-    <MapBox></MapBox>
+    <div>GEO DATA {{ geoData }}</div>
+    <!-- <MapBox></MapBox> -->
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -68,24 +67,45 @@ export default {
     callGeoData() {
       this.getGeoData().then(res => {
         if(res && res.data) {
-          this.setGeoData(res.data)
+          this.getLatLong(res.data);  
         }
       })
     },
-    getLatLong(){
-      const address  = 'address=1600+Amphitheatre+Parkway,+Mountain+View,+CA'
+    getLatLong(geoData){
+      const geoCodedData = geoData.map(dataPoint => {
+        return new Promise((resolve, reject) => {
+          if(dataPoint.coordinates === ''){
+            const address = `address=${dataPoint.address}, ${dataPoint.city}, ${dataPoint.country}`
 
-      this.getGeoCoding({
-        address,
-        key: this.apiKey
-      }).then(res => {
-        this.latLongData = res
+            this.getGeoCoding({
+              address,
+              key: this.apiKey
+            }).then(res => {
+              dataPoint.coordinates = res.data.results[0].geometry.location
+            })
+          }
+          resolve(dataPoint)
+          return dataPoint
+        })
       })
+
+      Promise.all(geoCodedData).then(res => {
+        this.setGeoData(res)
+      })
+
+      // const address  = 'address=, Mountain View, , USA'
+
+      // this.getGeoCoding({
+      //   address,
+      //   key: this.apiKey
+      // }).then(res => {
+      //   this.latLongData = res.data.results[0].geometry.location
+      // })
+
     }
   },
   created: function(){
     this.callGeoData();
-    this.getLatLong();
   }
 }
 </script>
