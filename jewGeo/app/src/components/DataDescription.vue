@@ -16,27 +16,27 @@
         props: {
             mapLabel: {
                 type: String,
-                required: true
+                required: false
             },
             year: {
                 type: String,
-                required: true
+                required: false
             },
             population: {
                 type: String,
-                required: true
+                required: false
             },
             country: {
                 type: String,
-                required: true
+                required: false
             },
             city: {
                 type: String,
-                required: true
+                required: false
             },
             source: {
                 type: String,
-                required: true
+                required: false
             },
         }
     }

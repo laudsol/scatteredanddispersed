@@ -1,9 +1,11 @@
 <template>
   <div class="row">
     <div class="col-md-3">
+      <YearFilter></YearFilter>
       <DataList></DataList>
     </div>
     <div class="col-md-9">
+
       <MapBox></MapBox>
     </div>
   </div>
@@ -15,13 +17,15 @@ import dotenv from 'dotenv';
 import * as api from '../services/api.js';
 import MapBox from './MapBox.vue';
 import DataList from './DataList.vue'
+import YearFilter from './YearFilter.vue'
 import { mapMutations, mapState, mapActions } from 'vuex';
 
 export default {
   name: 'HelloWorld',
   components: {
     MapBox,
-    DataList
+    DataList,
+    YearFilter
   },
   props: {
     msg: String
