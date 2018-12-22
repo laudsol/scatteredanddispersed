@@ -19,7 +19,6 @@ export const actions = {
 	},
 	[GET_GEO_CODING](context, inputs) {
 		return api.getGeoCodedData(inputs)
-		// output for lat/long is data.results[0].geometry.location.lat/long
 	}
 }
 

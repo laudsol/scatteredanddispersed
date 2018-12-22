@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div>GEO DATA {{ geoData }}</div>
-    <!-- <MapBox></MapBox> -->
+    <MapBox></MapBox>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -48,8 +48,6 @@ export default {
   },
   data() {
     return {
-      geoDataOLD: [],
-      latLongData: '',
       apiKey: process.env.VUE_APP_GOOGLE_MAPS_API_KEY
     }
   },
@@ -81,11 +79,17 @@ export default {
               address,
               key: this.apiKey
             }).then(res => {
-                dataPoint.coordinates = res.data.results[0].geometry.location
+              dataPoint = {
+                ...dataPoint,
+                coordinates: res.data.results[0].geometry.location
+              }
+              resolve(dataPoint)
+              return dataPoint
             })
+          } else {
+            resolve(dataPoint)
+            return dataPoint
           }
-          resolve(dataPoint)
-          return dataPoint
         })
       })
 
