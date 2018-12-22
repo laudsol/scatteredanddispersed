@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-md-4">
-      A bunch of text here
+    <div class="col-md-3">
+      <DataList></DataList>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-9">
       <MapBox></MapBox>
     </div>
   </div>
@@ -14,12 +14,14 @@
 import dotenv from 'dotenv';
 import * as api from '../services/api.js';
 import MapBox from './MapBox.vue';
+import DataList from './DataList.vue'
 import { mapMutations, mapState, mapActions } from 'vuex';
 
 export default {
   name: 'HelloWorld',
   components: {
-    MapBox
+    MapBox,
+    DataList
   },
   props: {
     msg: String
