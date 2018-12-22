@@ -5,7 +5,7 @@
       <DataList></DataList>
     </div>
     <div class="col-md-9">
-
+      <FilterDisplay></FilterDisplay>
       <MapBox></MapBox>
     </div>
   </div>
@@ -18,6 +18,7 @@ import * as api from '../services/api.js';
 import MapBox from './MapBox.vue';
 import DataList from './DataList.vue'
 import YearFilter from './YearFilter.vue'
+import FilterDisplay from './FilterDisplay.vue'
 import { mapMutations, mapState, mapActions } from 'vuex';
 
 export default {
@@ -25,7 +26,8 @@ export default {
   components: {
     MapBox,
     DataList,
-    YearFilter
+    YearFilter,
+    FilterDisplay
   },
   props: {
     msg: String
