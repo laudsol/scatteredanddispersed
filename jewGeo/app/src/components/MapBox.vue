@@ -38,8 +38,8 @@ import { mapState } from 'vuex';
 
 <style scoped>
     .google-map {
-        width: 800px;
-        height: 600px;
+        width: 600px;
+        height: 450px;
         margin: 0 auto;
         background: gray;
     }
