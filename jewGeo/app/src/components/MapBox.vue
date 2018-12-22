@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <div>IN MAP BOX {{ geoData }}</div>
-        <div class="google-map" id="the-one-true-map"></div>
-    </div>
+    <div class="google-map" id="the-one-true-map"></div>
 </template>
 
 <script>
@@ -21,14 +18,10 @@ import { mapState } from 'vuex';
                 }
 
                 const map = new google.maps.Map(element, options) 
-                const locations = this.geoData.map(obj => obj.coordinates)
-
-                const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-                const markers = locations.map(function(location, i) {
+                const markers = this.geoData.map(obj => {
                     return new google.maps.Marker({
-                        position: location,
-                        label: labels[i % labels.length]
+                        position: obj.coordinates,
+                        label: obj.label
                     });
                 });
 

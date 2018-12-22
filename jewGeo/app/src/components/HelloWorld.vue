@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <div>GEO DATA {{ geoData }}</div>
     <MapBox></MapBox>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
@@ -65,7 +64,16 @@ export default {
     callGeoData() {
       this.getGeoData().then(res => {
         if(res && res.data) {
-          this.getLatLong(res.data);  
+          const dataWithDisplayLabels = this.addDisplayLabels(res.data)
+          this.getLatLong(dataWithDisplayLabels);  
+        }
+      })
+    },
+    addDisplayLabels(data){
+      return data.map((obj,i) => {
+        return {
+          ...obj,
+          label: `${i}`
         }
       })
     },
