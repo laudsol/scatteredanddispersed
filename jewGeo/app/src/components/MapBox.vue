@@ -3,22 +3,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
     export default {
         name: 'MapBox',
         computed: {
-            ...mapState(['geoData'])
+            ...mapGetters({
+                filteredGeoData: 'GET_FILTERED_GEO_DATA'
+            })
         },
         methods: {
             setMapData() {
                 const element = document.getElementById("the-one-true-map")
                     const options = {
                     zoom: 2,
-                    center: this.geoData[0].coordinates
+                    center: this.filteredGeoData[0].coordinates
                 }
 
                 const map = new google.maps.Map(element, options) 
-                const markers = this.geoData.map(obj => {
+                const markers = this.filteredGeoData.map(obj => {
                     return new google.maps.Marker({
                         position: obj.coordinates,
                         label: obj.label
@@ -29,7 +31,7 @@ import { mapState } from 'vuex';
             }
         },
         watch: {
-            geoData: function(){
+            filteredGeoData: function(){
                 return this.setMapData();
             }
         }
