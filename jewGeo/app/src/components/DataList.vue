@@ -1,8 +1,8 @@
 <template>
     <div>
         <div>Full Data List</div>
-        <div class="data-scroll-box" :v-if="geoData.length > 0">
-            <div v-for="dataPoint in geoData" :key="dataPoint.label">
+        <div class="data-scroll-box" :v-if="filteredGeoData.length > 0">
+            <div v-for="dataPoint in filteredGeoData" :key="dataPoint.label">
                 <DataDescription
                     :mapLabel="dataPoint.label"
                     :year="dataPoint.year"
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import DataDescription from './DataDescription.vue'
 
     export default {
@@ -26,7 +26,9 @@ import DataDescription from './DataDescription.vue'
             DataDescription
         },
         computed: {
-            ...mapState(['geoData'])
+            ...mapGetters({
+                filteredGeoData: 'GET_FILTERED_GEO_DATA'
+            })
         }
     }
 </script>
