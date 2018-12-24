@@ -44,7 +44,7 @@
 
 <style>
     .description-box {
-        width: 300px;
+        width: 250px;
         border: black solid 1px;
         margin: 10px;
     }

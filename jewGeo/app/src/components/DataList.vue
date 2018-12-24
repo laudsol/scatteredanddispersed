@@ -35,6 +35,9 @@ import DataDescription from './DataDescription.vue'
 
 <style>
     .data-scroll-box {
-        padding-left: 30px;
+        padding-left: 10px;
+        height: 300px;
+        overflow: hidden;
+        overflow-y:scroll;
     }
 </style>
