@@ -1,22 +1,48 @@
 <template>
     <div>
-        <label>Start Year</label>
-        <input v-model="startYear"/>
-        <label>End Year</label>
-        <input v-model="endYear"/>
-        <Button @click="updateYearFilter">Update filter</Button>
+        <div class="pull-left">Current Time Frame: {{startYearTxt}} - {{endYearTxt}} </div>
+        <div class="pull-left">Change Range To <input class="year-input" v-model="sliderRange"/> Years</div>
+        <range-slider
+            ref="rangeSlider"
+            class="slider"
+            min="-3000"
+            max="2018"
+            :step="sliderRange"
+            v-model="sliderValue">
+        </range-slider>
     </div>
 </template>
 
 <script>
     import { mapMutations } from 'vuex';
+    import RangeSlider from 'vue-range-slider'
+    import 'vue-range-slider/dist/vue-range-slider.css'
 
     export default {
         name: 'YearFilter',
+        components: {
+            RangeSlider
+        },
         data() {
             return {
-                startYear: '',
-                endYear: ''
+                sliderRange: 250,
+                sliderValue: 0,
+                startRange: -3000,
+                endRange: 2018,
+            }
+        },
+        computed: {
+            startYear: function(){
+                return this.sliderValue - this.sliderRange/2
+            },
+            startYearTxt: function(){
+                return this.startYear > 0 ? `${this.startYear} AD` : `${this.startYear * -1} BC` 
+            },
+            endYear: function(){
+                return this.sliderValue + this.sliderRange/2
+            },
+            endYearTxt: function(){
+                return this.endYear > 0 ? `${this.endYear} AD` : `${this.endYear * -1} BC`
             }
         },
         methods: {
@@ -28,7 +54,35 @@
                     startYear: this.startYear,
                     endYear: this.endYear
                 })
+            },
+            changeSliderSize(){
+                this.$refs.rangeSlider.$children[0].$el.children[3].style.width = `${700 * this.sliderRange/(this.endRange - this.startRange)}px`
+            }
+        },
+        watch: {
+            sliderRange: function(){
+                this.changeSliderSize()
+            },
+            sliderValue: function(){
+                this.updateYearFilter()
             }
         }
     }
 </script>
+
+<style>
+    .pull-left {
+        margin-left: 100px;
+        text-align: left
+    }
+    .year-input {
+        width: 50px;
+    }
+    .slider {
+        width: 700px;
+    }
+    .range-slider-knob {
+        width: 35px;
+        border: grey 1px solid
+    }
+</style>

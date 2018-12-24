@@ -13,6 +13,7 @@
     "dotenv": "^6.1.0",
     "vue": "^2.5.17",
     "vue-axios": "^2.1.4",
+    "vue-range-slider": "^0.6.0",
     "vue-resize": "^0.4.5",
     "vue-scroll-bar": "^1.2.2",
     "vue2-scrollbar": "0.0.3",

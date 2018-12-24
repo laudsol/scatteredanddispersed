@@ -13,6 +13,10 @@ import { mapGetters } from 'vuex';
         },
         methods: {
             setMapData() {
+                if(this.filteredGeoData.length === 0){
+                    return
+                }
+
                 const element = document.getElementById("the-one-true-map")
                     const options = {
                     zoom: 2,
