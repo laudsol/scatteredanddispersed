@@ -29,10 +29,13 @@ export const actions = {
 export const getters = {
 	[GET_FILTERED_GEO_DATA](state) {
 		return state.geoData.filter(obj => {
+			const year = parseInt(obj.year)
+			const startYear = parseInt(obj.start_year)
+			const endYear = parseInt(obj.end_year)
 			if (obj.year !== "") {
-				return parseInt(obj.year) >= state.yearFilter.startYear && parseInt(obj.year) <= state.yearFilter.endYear
+				return year >= state.yearFilter.startYear && year <= state.yearFilter.endYear
 			} else {
-				return parseInt(obj.start_year) >= state.yearFilter.startYear && parseInt(obj.end_year) <= state.yearFilter.endYear
+				return !(state.yearFilter.startYear > endYear ||  state.yearFilter.endYear < startYear)
 			}
 		})
 	}
