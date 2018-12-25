@@ -7,7 +7,7 @@
             class="slider"
             min="-3000"
             max="2018"
-            :step="sliderRange"
+            step="10"
             v-model="sliderValue">
         </range-slider>
     </div>
@@ -79,10 +79,13 @@
         width: 50px;
     }
     .slider {
+        /* FIX this later by preventing scroll past the end */
+        overflow: hidden;
         width: 700px;
     }
     .range-slider-knob {
         width: 35px;
-        border: grey 1px solid
+        border: grey 1px solid;
+        border-radius: 10px;
     }
 </style>
