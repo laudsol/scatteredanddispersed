@@ -42,14 +42,15 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                 })
 
                 map.addListener('zoom_changed', () => {
-                    if (this.singleDataPointFocus && map.getZoom() <= 5) {
+                    if (map.getZoom() === 7) {
                         this.setFocusedDataPoint({})
-                        this.setFocus(false)
                         this.resetZoom = true
                     } else {
                         this.resetZoom = false
                     }
                 });
+
+                this.setFocus(false)
            }
         },
         watch: {
@@ -59,6 +60,7 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                 }
             },
             focusedDataPoint: function(){
+                debugger;
                 if (this.filteredGeoData.length > 0 && !this.resetZoom){
                     return this.setMapData();
                 }
