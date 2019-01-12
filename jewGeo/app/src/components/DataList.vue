@@ -28,10 +28,12 @@ import DataDescription from './DataDescription.vue'
         },
         methods: {
             ...mapMutations({
-                setFocusedDataPoint: 'SET_FOCUSED_DATA_POINT'
+                setFocusedDataPoint: 'SET_FOCUSED_DATA_POINT',
+                setFocus: 'SET_FOCUS'
             }),
             focusOnDataPoint(dataPoint) {
                 this.setFocusedDataPoint(dataPoint)
+                this.setFocus(true)
             }
         }
     }

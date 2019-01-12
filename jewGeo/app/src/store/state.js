@@ -1,6 +1,7 @@
 const state = {
     geoData: [],
-    focusedDataPoint: {active: false, data: {}},
+    focusedDataPoint: {},
+    singleDataPointFocus: false,
     yearFilter: {
         startYear: -3000,
         endYear: 2018

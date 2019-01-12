@@ -64,7 +64,7 @@ export default {
     getLatLong(geoData){
       const geoCodedData = geoData.map(dataPoint => {
         return new Promise((resolve, reject) => {
-          if(dataPoint.coordinates === ''){
+          if (dataPoint.coordinates === ''){
             const address = `address=${dataPoint.address}, ${dataPoint.city}, ${dataPoint.country}`
 
             this.getGeoCoding({

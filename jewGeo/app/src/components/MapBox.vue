@@ -3,22 +3,25 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState, mapMutations } from 'vuex';
     export default {
         name: 'MapBox',
         computed: {
             ...mapGetters({
                 filteredGeoData: 'GET_FILTERED_GEO_DATA'
-            })
+            }),
+            ...mapState(['focusedDataPoint', 'singleDataPointFocus'])
         },
         methods: {
+            ...mapMutations({
+                setFocusedDataPoint: 'SET_FOCUSED_DATA_POINT'
+            }),
             setMapData() {
                 const element = document.getElementById("the-one-true-map")
-                    const options = {
-                    zoom: this.filteredGeoData.length > 1 ? 2 : 8,
-                    center: this.filteredGeoData[0].coordinates
-                }
-                const map = new google.maps.Map(element, options) 
+                const zoom = this.singleDataPointFocus ? 8 : 2
+                const center = this.singleDataPointFocus ? this.focusedDataPoint.coordinates : this.filteredGeoData[0].coordinates 
+
+                const map = new google.maps.Map(element, {zoom, center}) 
                 const markers = this.filteredGeoData.map(obj => {
                     return new google.maps.Marker({
                         position: obj.coordinates,
@@ -36,6 +39,11 @@ import { mapGetters } from 'vuex';
         },
         watch: {
             filteredGeoData: function(){
+                if (this.filteredGeoData.length > 0){
+                    return this.setMapData();
+                }
+            },
+            focusedDataPoint: function(){
                 if (this.filteredGeoData.length > 0){
                     return this.setMapData();
                 }
