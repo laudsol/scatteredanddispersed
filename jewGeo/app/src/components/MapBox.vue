@@ -6,6 +6,11 @@
 import { mapGetters, mapState, mapMutations } from 'vuex';
     export default {
         name: 'MapBox',
+        data(){
+            return {
+                resetZoom: false
+            }
+        },
         computed: {
             ...mapGetters({
                 filteredGeoData: 'GET_FILTERED_GEO_DATA'
@@ -14,7 +19,8 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
         },
         methods: {
             ...mapMutations({
-                setFocusedDataPoint: 'SET_FOCUSED_DATA_POINT'
+                setFocusedDataPoint: 'SET_FOCUSED_DATA_POINT',
+                setFocus: 'SET_FOCUS'
             }),
             setMapData() {
                 const element = document.getElementById("the-one-true-map")
@@ -32,19 +38,28 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                 
                 markers.map(marker => {
                         marker.addListener('click', () => {
-                        console.log('clicked', marker)
                     })
                 })
+
+                map.addListener('zoom_changed', () => {
+                    if (this.singleDataPointFocus && map.getZoom() <= 5) {
+                        this.setFocusedDataPoint({})
+                        this.setFocus(false)
+                        this.resetZoom = true
+                    } else {
+                        this.resetZoom = false
+                    }
+                });
            }
         },
         watch: {
             filteredGeoData: function(){
-                if (this.filteredGeoData.length > 0){
+                if (this.filteredGeoData.length > 0 && !this.resetZoom){
                     return this.setMapData();
                 }
             },
             focusedDataPoint: function(){
-                if (this.filteredGeoData.length > 0){
+                if (this.filteredGeoData.length > 0 && !this.resetZoom){
                     return this.setMapData();
                 }
             }
