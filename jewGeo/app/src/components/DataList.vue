@@ -4,12 +4,8 @@
         <div class="data-scroll-box" :v-if="filteredGeoData.length > 0">
             <div v-for="dataPoint in filteredGeoData" :key="dataPoint.label">
                 <DataDescription
-                    :mapLabel="dataPoint.label"
-                    :year="dataPoint.year"
-                    :population="dataPoint.population"
-                    :country="dataPoint.country"
-                    :city="dataPoint.city"
-                    :source="`${dataPoint.source}`"
+                    :dataPoint="dataPoint"
+                    :focusOnDataPoint="focusOnDataPoint"
                 ></DataDescription>
             </div> 
         </div>
@@ -17,7 +13,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import DataDescription from './DataDescription.vue'
 
     export default {
@@ -29,6 +25,14 @@ import DataDescription from './DataDescription.vue'
             ...mapGetters({
                 filteredGeoData: 'GET_FILTERED_GEO_DATA'
             })
+        },
+        methods: {
+            ...mapMutations({
+                setFocusedDataPoint: 'SET_FOCUSED_DATA_POINT'
+            }),
+            focusOnDataPoint(dataPoint) {
+                this.setFocusedDataPoint(dataPoint)
+            }
         }
     }
 </script>

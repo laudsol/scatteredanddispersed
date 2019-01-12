@@ -13,16 +13,11 @@ import { mapGetters } from 'vuex';
         },
         methods: {
             setMapData() {
-                if(this.filteredGeoData.length === 0){
-                    return
-                }
-
                 const element = document.getElementById("the-one-true-map")
                     const options = {
-                    zoom: 2,
+                    zoom: this.filteredGeoData.length > 1 ? 2 : 8,
                     center: this.filteredGeoData[0].coordinates
                 }
-
                 const map = new google.maps.Map(element, options) 
                 const markers = this.filteredGeoData.map(obj => {
                     return new google.maps.Marker({
@@ -30,13 +25,20 @@ import { mapGetters } from 'vuex';
                         label: obj.label
                     });
                 });
-
                 const markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
-            }
+                
+                markers.map(marker => {
+                        marker.addListener('click', () => {
+                        console.log('clicked', marker)
+                    })
+                })
+           }
         },
         watch: {
             filteredGeoData: function(){
-                return this.setMapData();
+                if (this.filteredGeoData.length > 0){
+                    return this.setMapData();
+                }
             }
         }
     }

@@ -1,12 +1,11 @@
 <template>
-    <div class="description-box">
-        <div class="single-data-point">Label: {{mapLabel}} </div>
-        <div class="single-data-point">Country: {{country}} </div>
-        <div class="single-data-point">City: {{city}} </div>
-        <div class="single-data-point">Population: {{population}} </div>
-        <div class="single-data-point">Year: {{year}} </div>
-        <div class="single-data-point">Source: {{source}} </div>
-
+    <div class="description-box" @click="focusOnDataPoint(dataPoint)">
+        <div class="single-data-point">Label: {{dataPoint.mapLabel}} </div>
+        <div class="single-data-point">Country: {{dataPoint.country}} </div>
+        <div class="single-data-point">City: {{dataPoint.city}} </div>
+        <div class="single-data-point">Population: {{dataPoint.population}} </div>
+        <div class="single-data-point">Year: {{dataPoint.year}} </div>
+        <div class="single-data-point">Source: {{dataPoint.source}} </div>
     </div>
 </template>
 
@@ -14,30 +13,14 @@
     export default {
         name: 'DataDescription',
         props: {
-            mapLabel: {
-                type: String,
-                required: false
+            dataPoint: {
+                type: Object,
+                required: true
             },
-            year: {
-                type: String,
-                required: false
-            },
-            population: {
-                type: String,
-                required: false
-            },
-            country: {
-                type: String,
-                required: false
-            },
-            city: {
-                type: String,
-                required: false
-            },
-            source: {
-                type: String,
-                required: false
-            },
+            focusOnDataPoint: {
+                type: Function,
+                required: true
+            }
         }
     }
 </script>
@@ -47,6 +30,12 @@
         width: 250px;
         border: black solid 1px;
         margin: 10px;
+    }
+    .description-box:hover {
+        background-color: yellow;
+    }
+    .description-box:active {
+        background-color: green;
     }
     .single-data-point {
     text-align: left;
