@@ -20,7 +20,7 @@ import YearFilter from './YearFilter.vue'
 import { mapMutations, mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'HelloWorld',
+  name: 'Index',
   components: {
     MapBox,
     DataList,
