@@ -92,6 +92,8 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
         width: 700px;
         height: 500px;
         margin: 0 auto;
-        background: gray;
+        /* background: gray; */
+        border: 2px solid #9292b9;
+        border-radius: 1%;
     }
 </style>

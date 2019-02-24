@@ -38,7 +38,7 @@
 <style>
     .description-box {
         width: 240px;
-        border: black solid 1px;
+        border: #9292b9 solid 1px;
         margin: 10px;
         border-radius: 2%;
         padding: 5px;

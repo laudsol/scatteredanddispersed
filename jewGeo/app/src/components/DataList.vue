@@ -44,7 +44,7 @@ import DataDescription from './DataDescription.vue'
         margin-top: 45px;
     }
     .data-scroll-box {
-        padding-left: 50px;
+        margin-left: 80px;
         height: 300px;
         overflow: hidden;
         overflow-y:scroll;
