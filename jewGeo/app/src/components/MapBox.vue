@@ -8,8 +8,8 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
         name: 'MapBox',
         data(){
             return {
-                // resetZoom: false
-                lastZoom: 0
+                lastZoom: 0,
+                lastCoordinates: {}
             }
         },
         computed: {
@@ -24,9 +24,9 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                 setFocus: 'SET_FOCUS'
             }),
             setMapData() {
-                const element = document.getElementById("the-one-true-map")
+                const mapElement = document.getElementById("the-one-true-map")
                 let zoom = 5
-                const center = this.singleDataPointFocus
+                let center = this.singleDataPointFocus
                     ? this.focusedDataPoint.coordinates
                     : this.filteredGeoData[0].coordinates
 
@@ -35,8 +35,13 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                     this.lastZoom = 0
                 }
 
-                const map = new google.maps.Map(element, {zoom, center}) 
-                console.log(map.getZoom())
+                if (this.lastCoordinates.hasOwnProperty('lat')) {
+                    center = this.lastCoordinates
+                    this.lastCoordinates = {}
+                }
+
+                const map = new google.maps.Map(mapElement, {zoom, center}) 
+
                 const markers = this.filteredGeoData.map(obj => {
                     return new google.maps.Marker({
                         position: obj.coordinates,
@@ -55,6 +60,11 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                         this.setFocusedDataPoint({})
                         this.setFocus(false)
                         this.lastZoom = map.getZoom()
+
+                        this.lastCoordinates = {
+                            lat: map.getCenter().lat(),
+                            lng: map.getCenter().lng()
+                        }
                     }
                 });
            }
