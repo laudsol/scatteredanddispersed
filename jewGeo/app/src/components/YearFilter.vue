@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="pull-left">Current Time Frame: {{startYearTxt}} - {{endYearTxt}} </div>
-        <div class="pull-left">Change Range To <input class="year-input" v-model="sliderRange"/> Years</div>
+        <div class="pull-left">Set Filter Range To <input class="year-input" v-model="sliderRange"/> Years</div>
         <range-slider
             ref="rangeSlider"
             class="slider"
@@ -27,7 +27,7 @@
             return {
                 sliderRange: 250,
                 sliderValue: 0,
-                startRange: -3000,
+                startRange: -2000,
                 endRange: 2019,
             }
         },

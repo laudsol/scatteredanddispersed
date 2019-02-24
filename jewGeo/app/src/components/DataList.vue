@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>Full Data List</div>
+        <h5 class="data-header">Full Data List</h5>
         <div class="data-scroll-box" :v-if="filteredGeoData.length > 0">
             <div v-for="dataPoint in filteredGeoData" :key="dataPoint.label">
                 <DataDescription
@@ -40,8 +40,11 @@ import DataDescription from './DataDescription.vue'
 </script>
 
 <style>
+    .data-header {
+        margin-top: 45px;
+    }
     .data-scroll-box {
-        padding-left: 10px;
+        padding-left: 50px;
         height: 300px;
         overflow: hidden;
         overflow-y:scroll;
