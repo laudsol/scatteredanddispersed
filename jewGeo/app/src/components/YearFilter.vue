@@ -6,7 +6,7 @@
             ref="rangeSlider"
             class="slider"
             min="-3000"
-            max="2018"
+            max="2019"
             step="10"
             v-model="sliderValue">
         </range-slider>
@@ -28,7 +28,7 @@
                 sliderRange: 250,
                 sliderValue: 0,
                 startRange: -3000,
-                endRange: 2018,
+                endRange: 2019,
             }
         },
         computed: {

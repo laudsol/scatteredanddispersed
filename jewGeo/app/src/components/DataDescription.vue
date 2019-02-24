@@ -1,6 +1,5 @@
 <template>
     <div class="description-box" @click="focusOnDataPoint(dataPoint)">
-        <div class="single-data-point">Label: {{dataPoint.mapLabel}} </div>
         <div class="single-data-point">Country: {{dataPoint.country}} </div>
         <div class="single-data-point">City: {{dataPoint.city}} </div>
         <div class="single-data-point">Population: {{dataPoint.population}} </div>
@@ -27,7 +26,7 @@
 
 <style>
     .description-box {
-        width: 250px;
+        width: 240px;
         border: black solid 1px;
         margin: 10px;
     }

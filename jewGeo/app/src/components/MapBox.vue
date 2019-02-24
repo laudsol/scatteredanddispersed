@@ -9,6 +9,7 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
         data(){
             return {
                 lastZoom: 0,
+                useLastCoordinates: false,
                 lastCoordinates: {}
             }
         },
@@ -26,22 +27,22 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
             setMapData() {
                 const mapElement = document.getElementById("the-one-true-map")
                 let zoom = 5
-                let center = this.singleDataPointFocus
-                    ? this.focusedDataPoint.coordinates
-                    : this.filteredGeoData[0].coordinates
+                const center = this.useLastCoordinates
+                    ? this.lastCoordinates
+                    : this.singleDataPointFocus
+                        ? this.focusedDataPoint.coordinates
+                        : this.filteredGeoData[0].coordinates
 
                 if (this.lastZoom > 0) {
                     zoom = this.lastZoom
                     this.lastZoom = 0
                 }
 
-                if (this.lastCoordinates.hasOwnProperty('lat')) {
-                    center = this.lastCoordinates
-                    this.lastCoordinates = {}
+                if (this.useLastCoordinates) {
+                    this.useLastCoordinates = false
                 }
 
                 const map = new google.maps.Map(mapElement, {zoom, center}) 
-
                 const markers = this.filteredGeoData.map(obj => {
                     return new google.maps.Marker({
                         position: obj.coordinates,
@@ -49,6 +50,11 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                     });
                 });
                 const markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
+
+                this.lastCoordinates = {
+                    lat: map.getCenter().lat(),
+                    lng: map.getCenter().lng()
+                }
 
                 markers.map(marker => {
                         marker.addListener('click', () => {
@@ -60,24 +66,21 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                         this.setFocusedDataPoint({})
                         this.setFocus(false)
                         this.lastZoom = map.getZoom()
-
-                        this.lastCoordinates = {
-                            lat: map.getCenter().lat(),
-                            lng: map.getCenter().lng()
-                        }
+                        this.useLastCoordinates = true
                     }
                 });
            }
         },
         watch: {
             filteredGeoData: function(){
-                if (this.filteredGeoData.length > 0){
-                    return this.setMapData();
+                if (this.filteredGeoData.length === 0) {
+                    this.useLastCoordinates = true;
                 }
+                this.setMapData();
             },
             focusedDataPoint: function(){
                 if (this.filteredGeoData.length > 0){
-                    return this.setMapData();
+                    this.setMapData();
                 }
             }
         }
