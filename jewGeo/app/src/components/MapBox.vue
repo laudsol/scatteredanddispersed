@@ -8,7 +8,8 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
         name: 'MapBox',
         data(){
             return {
-                resetZoom: false
+                // resetZoom: false
+                lastZoom: 0
             }
         },
         computed: {
@@ -24,10 +25,18 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
             }),
             setMapData() {
                 const element = document.getElementById("the-one-true-map")
-                const zoom = this.singleDataPointFocus ? 8 : 2
-                const center = this.singleDataPointFocus ? this.focusedDataPoint.coordinates : this.filteredGeoData[0].coordinates 
+                let zoom = 5
+                const center = this.singleDataPointFocus
+                    ? this.focusedDataPoint.coordinates
+                    : this.filteredGeoData[0].coordinates
+
+                if (this.lastZoom > 0) {
+                    zoom = this.lastZoom
+                    this.lastZoom = 0
+                }
 
                 const map = new google.maps.Map(element, {zoom, center}) 
+                console.log(map.getZoom())
                 const markers = this.filteredGeoData.map(obj => {
                     return new google.maps.Marker({
                         position: obj.coordinates,
@@ -35,33 +44,29 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                     });
                 });
                 const markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
-                
+
                 markers.map(marker => {
                         marker.addListener('click', () => {
                     })
                 })
 
                 map.addListener('zoom_changed', () => {
-                    if (map.getZoom() === 7) {
+                    if (this.singleDataPointFocus) {
                         this.setFocusedDataPoint({})
-                        this.resetZoom = true
-                    } else {
-                        this.resetZoom = false
+                        this.setFocus(false)
+                        this.lastZoom = map.getZoom()
                     }
                 });
-
-                this.setFocus(false)
            }
         },
         watch: {
             filteredGeoData: function(){
-                if (this.filteredGeoData.length > 0 && !this.resetZoom){
+                if (this.filteredGeoData.length > 0){
                     return this.setMapData();
                 }
             },
             focusedDataPoint: function(){
-                debugger;
-                if (this.filteredGeoData.length > 0 && !this.resetZoom){
+                if (this.filteredGeoData.length > 0){
                     return this.setMapData();
                 }
             }
