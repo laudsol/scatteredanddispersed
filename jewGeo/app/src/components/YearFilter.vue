@@ -88,4 +88,10 @@
         border: grey 1px solid;
         border-radius: 10px;
     }
+    .range-slider-rail {
+        background-color: #666699;
+    }
+    .range-slider-fill {
+        background-color: #ff9966;
+    }
 </style>

@@ -44,10 +44,10 @@
         padding: 5px;
     }
     .description-box:hover {
-        background-color: yellow;
+        background-color: #666699;
     }
     .description-box:active {
-        background-color: green;
+        background-color: #ff9966;
     }
     .single-data-point {
     text-align: left;
