@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="filter-container">
         <div class="pull-left">Current Time Frame: {{startYearTxt}} - {{endYearTxt}} </div>
         <div class="pull-left">Set Filter Range To <input class="year-input" v-model="sliderRange"/> Years</div>
         <range-slider
@@ -77,6 +77,7 @@
     }
     .year-input {
         width: 50px;
+        margin-bottom: 10px;
     }
     .slider {
         /* FIX this later by preventing scroll past the end */

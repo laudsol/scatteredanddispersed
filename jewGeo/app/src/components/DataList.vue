@@ -41,7 +41,7 @@ import DataDescription from './DataDescription.vue'
 
 <style>
     .data-header {
-        margin-top: 45px;
+        margin-top: 55px;
     }
     .data-scroll-box {
         margin-left: 80px;
