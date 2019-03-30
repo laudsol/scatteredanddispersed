@@ -1,5 +1,5 @@
 <template>
-    <div class="description-box" @click="focusOnDataPoint(dataPoint)">
+    <div class="description-box" @click="focusOnMapPoint(dataPoint)">
         <div class="single-data-point">Country: {{dataPoint.country}} </div>
         <div class="single-data-point">City: {{dataPoint.city}} </div>
         <div class="single-data-point">Population: {{dataPoint.population}} </div>
@@ -16,7 +16,7 @@
                 type: Object,
                 required: true
             },
-            focusOnDataPoint: {
+            focusOnMapPoint: {
                 type: Function,
                 required: true
             }
@@ -50,6 +50,6 @@
         background-color: #ff9966;
     }
     .single-data-point {
-    text-align: left;
+        text-align: left;
     }
 </style>

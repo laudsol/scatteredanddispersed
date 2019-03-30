@@ -17,20 +17,21 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
             ...mapGetters({
                 filteredGeoData: 'GET_FILTERED_GEO_DATA'
             }),
-            ...mapState(['focusedDataPoint', 'singleDataPointFocus'])
+            ...mapState(['focusedMapPoint', 'singleMapPointFocus'])
         },
         methods: {
             ...mapMutations({
-                setFocusedDataPoint: 'SET_FOCUSED_DATA_POINT',
-                setFocus: 'SET_FOCUS'
+                setFocusedMapPoint: 'SET_FOCUSED_MAP_POINT',
+                setMapFocus: 'SET_MAP_FOCUS',
+                setFocusedInfoCard: 'SET_FOCUSED_INFO_CARD'
             }),
             setMapData() {
                 const mapElement = document.getElementById("the-one-true-map")
                 let zoom = 5
                 const center = this.useLastCoordinates
                     ? this.lastCoordinates
-                    : this.singleDataPointFocus
-                        ? this.focusedDataPoint.coordinates
+                    : this.singleMapPointFocus
+                        ? this.focusedMapPoint.coordinates
                         : this.filteredGeoData[0].coordinates
 
                 if (this.lastZoom > 0) {
@@ -58,13 +59,14 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
 
                 markers.map(marker => {
                         marker.addListener('click', () => {
+                            this.setFocusedInfoCard(marker.label)
                     })
                 })
 
                 map.addListener('zoom_changed', () => {
-                    if (this.singleDataPointFocus) {
-                        this.setFocusedDataPoint({})
-                        this.setFocus(false)
+                    if (this.singleMapPointFocus) {
+                        this.setFocusedMapPoint({})
+                        this.setMapFocus(false)
                         this.lastZoom = map.getZoom()
                         this.useLastCoordinates = true
                     }
@@ -78,7 +80,7 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                 }
                 this.setMapData();
             },
-            focusedDataPoint: function(){
+            focusedMapPoint: function(){
                 if (this.filteredGeoData.length > 0){
                     this.setMapData();
                 }

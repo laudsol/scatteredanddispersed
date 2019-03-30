@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import state from './state.js'
-import { SET_GEO_DATA, SET_YEAR_FILTER, SET_FOCUSED_DATA_POINT, SET_FOCUS } from './mutations.js'
+import { SET_GEO_DATA, SET_YEAR_FILTER, SET_FOCUSED_MAP_POINT, SET_MAP_FOCUS, SET_FOCUSED_INFO_CARD } from './mutations.js'
 import { GET_GEO_DATA, GET_GEO_CODING } from './actions.js'
 import { GET_FILTERED_GEO_DATA } from './getters.js'
 import * as api from '../services/api.js'
@@ -15,11 +15,14 @@ export const mutations = {
 	[SET_YEAR_FILTER](state, payload) {
 		state.yearFilter = payload
 	},
-	[SET_FOCUSED_DATA_POINT](state, payload) {
-		state.focusedDataPoint = payload
+	[SET_FOCUSED_MAP_POINT](state, payload) {
+		state.focusedMapPoint = payload
 	},
-	[SET_FOCUS](state, payload) {
-		state.singleDataPointFocus = payload
+	[SET_MAP_FOCUS](state, payload) {
+		state.singleMapPointFocus = payload
+	},
+	[SET_FOCUSED_INFO_CARD](state, payload) {
+		state.focusedInfoCard = payload
 	}
 }
 

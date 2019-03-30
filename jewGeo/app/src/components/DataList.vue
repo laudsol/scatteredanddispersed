@@ -1,11 +1,11 @@
 <template>
     <div>
         <h5 class="data-header">Full Data List</h5>
-        <div class="data-scroll-box" :v-if="filteredGeoData.length > 0">
-            <div v-for="dataPoint in filteredGeoData" :key="dataPoint.label">
+        <div class="data-scroll-box" :v-if="filteredData.length > 0">
+            <div v-for="dataPoint in filteredData" :key="dataPoint.label">
                 <DataDescription
                     :dataPoint="dataPoint"
-                    :focusOnDataPoint="focusOnDataPoint"
+                    :focusOnMapPoint="focusOnMapPoint"
                 ></DataDescription>
             </div> 
         </div>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapState } from 'vuex';
 import DataDescription from './DataDescription.vue'
 
     export default {
@@ -21,19 +21,42 @@ import DataDescription from './DataDescription.vue'
         components: {
             DataDescription
         },
+        data() {
+            return {
+                filteredData: []
+            }
+        },
         computed: {
             ...mapGetters({
                 filteredGeoData: 'GET_FILTERED_GEO_DATA'
-            })
+            }),
+            ...mapState(['focusedInfoCard'])
         },
         methods: {
             ...mapMutations({
-                setFocusedDataPoint: 'SET_FOCUSED_DATA_POINT',
-                setFocus: 'SET_FOCUS'
+                setFocusedMapPoint: 'SET_FOCUSED_MAP_POINT',
+                setMapFocus: 'SET_MAP_FOCUS'
             }),
-            focusOnDataPoint(dataPoint) {
-                this.setFocusedDataPoint(dataPoint)
-                this.setFocus(true)
+            focusOnMapPoint(dataPoint) {
+                this.setFocusedMapPoint(dataPoint)
+                this.setMapFocus(true)
+            }
+        }, 
+        watch: {
+            filteredGeoData: function() {
+              if (this.filteredGeoData) {
+                  this.filteredData = this.filteredGeoData;
+              }  
+            },
+            focusedInfoCard: function() {
+                if (this.focusedInfoCard !== null) {
+                    this.filterData =  this.filteredData.map(obj => {
+                        if (obj.label === this.focusedInfoCard) {
+                            obj.focus = true
+                        }
+                        return obj
+                    })
+                }
             }
         }
     }
