@@ -23,7 +23,8 @@ import DataDescription from './DataDescription.vue'
         },
         data() {
             return {
-                filteredData: []
+                filteredData: [],
+                dataCardInFocus: false
             }
         },
         computed: {
@@ -37,9 +38,26 @@ import DataDescription from './DataDescription.vue'
                 setFocusedMapPoint: 'SET_FOCUSED_MAP_POINT',
                 setMapFocus: 'SET_MAP_FOCUS'
             }),
+            getNumericLabel(obj) {
+                return obj.label.slice(0, obj.label.indexOf('focus'));
+            },
             focusOnMapPoint(dataPoint) {
                 this.setFocusedMapPoint(dataPoint)
                 this.setMapFocus(true)
+                if (this.dataCardInFocus){
+                    this.filteredData = this.filteredData.map(obj => {
+                        let updatedLabel = obj.label;
+                        if (obj.label.indexOf('focus') > -1) {
+                            updatedLabel = this.getNumericLabel(obj);
+                        }
+                        return {
+                            ...obj,
+                            label: updatedLabel
+                        }
+                    })
+                    this.dataCardInFocus = false;
+                }
+             
             }
         }, 
         watch: {
@@ -50,13 +68,16 @@ import DataDescription from './DataDescription.vue'
             },
             focusedInfoCard: function() {
                 if (this.focusedInfoCard !== null) {
-                    this.filterData =  this.filteredData.map(obj => {
-                        if (obj.label === this.focusedInfoCard) {
+                    this.filteredData =  this.filteredData.map(obj => {
+                        if (obj.label.indexOf('focus') > -1 && obj.label !== this.focusedInfoCard) {
+                            obj.label = this.getNumericLabel(obj)
+                        } else if (obj.label === this.focusedInfoCard) {
                             // changing the label will make the component re render since 'label' is the key -- needs to be undone for list focus reset
                             obj.label = `${obj.label}focus`
                         }
                         return obj
                     });
+                    this.dataCardInFocus = true;
                 }
             }
         }
