@@ -2,12 +2,12 @@
     <div>
         <h5 class="data-header">Full Data List</h5>
         <div class="data-scroll-box" :v-if="filteredData.length > 0">
-            <div v-for="dataPoint in filteredData" :key="dataPoint.label">
-                <DataDescription
-                    :dataPoint="dataPoint"
-                    :focusOnMapPoint="focusOnMapPoint"
-                ></DataDescription>
-            </div> 
+            <DataDescription 
+                v-for="dataPoint in filteredData"
+                :key="dataPoint.label"
+                :dataPoint="dataPoint"
+                :focusOnMapPoint="focusOnMapPoint"
+            ></DataDescription>
         </div>
     </div>
 </template>
@@ -52,10 +52,11 @@ import DataDescription from './DataDescription.vue'
                 if (this.focusedInfoCard !== null) {
                     this.filterData =  this.filteredData.map(obj => {
                         if (obj.label === this.focusedInfoCard) {
-                            obj.focus = true
+                            // changing the label will make the component re render since 'label' is the key -- needs to be undone for list focus reset
+                            obj.label = `${obj.label}focus`
                         }
                         return obj
-                    })
+                    });
                 }
             }
         }
