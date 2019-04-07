@@ -43,8 +43,8 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                     this.useLastCoordinates = false
                 }
 
-                const map = new google.maps.Map(mapElement, {zoom, center}) 
-                const markers = this.filteredGeoData.map(obj => {
+                const map = new google.maps.Map(mapElement, {zoom, center})
+                const markers = this.filteredGeoData.map(obj => {   
                     return new google.maps.Marker({
                         position: obj.coordinates,
                         label: obj.label

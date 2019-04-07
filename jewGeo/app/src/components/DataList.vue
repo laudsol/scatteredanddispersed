@@ -42,13 +42,18 @@ import DataDescription from './DataDescription.vue'
                 return obj.label.slice(0, obj.label.indexOf('focus'));
             },
             focusOnMapPoint(dataPoint) {
-                this.setFocusedMapPoint(dataPoint)
-                this.setMapFocus(true)
+                // needed to remove the 'focus' string from label if exists
+                let cleanedDataPoint = dataPoint;
+
                 if (this.dataCardInFocus){
                     this.filteredData = this.filteredData.map(obj => {
                         let updatedLabel = obj.label;
                         if (obj.label.indexOf('focus') > -1) {
                             updatedLabel = this.getNumericLabel(obj);
+                            cleanedDataPoint = {
+                                ...cleanedDataPoint,
+                                label: this.getNumericLabel(obj)
+                            }
                         }
                         return {
                             ...obj,
@@ -56,8 +61,10 @@ import DataDescription from './DataDescription.vue'
                         }
                     })
                     this.dataCardInFocus = false;
-                }
-             
+                };
+
+                this.setFocusedMapPoint(cleanedDataPoint);
+                this.setMapFocus(true);
             }
         }, 
         watch: {
@@ -68,7 +75,7 @@ import DataDescription from './DataDescription.vue'
             },
             focusedInfoCard: function() {
                 if (this.focusedInfoCard !== null) {
-                    this.filteredData =  this.filteredData.map(obj => {
+                     this.filteredData = this.filteredData.map(obj => {
                         if (obj.label.indexOf('focus') > -1 && obj.label !== this.focusedInfoCard) {
                             obj.label = this.getNumericLabel(obj)
                         } else if (obj.label === this.focusedInfoCard) {
@@ -77,6 +84,7 @@ import DataDescription from './DataDescription.vue'
                         }
                         return obj
                     });
+
                     this.dataCardInFocus = true;
                 }
             }
