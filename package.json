@@ -5,9 +5,12 @@
   "scripts": {
     "start": "node server.js",
     "serve": "vue-cli-service serve",
-    "build": "node build/build.js",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
+  },
+  "engines": {
+    "node": "9.8.0"
   },
   "dependencies": {
     "axios": "^0.18.0",
