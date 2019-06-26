@@ -61,7 +61,7 @@ import DataDescription from './DataDescription.vue'
                         }
                     })
                     this.dataCardInFocus = false;
-                };
+                }
 
                 this.setFocusedMapPoint(cleanedDataPoint);
                 this.setMapFocus(true);
