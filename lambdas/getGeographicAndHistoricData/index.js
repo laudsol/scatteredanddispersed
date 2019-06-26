@@ -7,7 +7,7 @@ exports.handler = (event) => {
      
         return new Promise((resolve, reject) => {
             s3.getObject({
-                Bucket: 'jewish-geographic-timeline-data',
+                Bucket: 'geographic-timeline-data',
                 Key: 'Geographic_data.csv'
             }, function(err, response) {
                 if (err) {
