@@ -6,6 +6,8 @@ The timeframe is flexible, allowing the user to view snapshots of data at interv
 
 Clicking on any of the data cards will zoom in on the corespnding data point on the map. Clicking on any data point on the map will scroll to and highlight the corresponding data card.
 
+Follow these steps for deployment to Heroku: https://dev.to/jmbejar/how-to-quickly-deploy-a-vuejs-app-to-heroku-5b0f
+
 ## Project setup
 ```
 npm install
