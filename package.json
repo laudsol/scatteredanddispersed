@@ -5,7 +5,6 @@
   "scripts": {
     "start": "npm run dev",
     "serve": "vue-cli-service serve",
-    // "build": "vue-cli-service build",
     "build": "node build/build.js",
     "lint": "vue-cli-service lint",
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build",
