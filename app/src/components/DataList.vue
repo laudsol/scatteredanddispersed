@@ -70,7 +70,7 @@ import DataDescription from './DataDescription.vue'
         watch: {
             filteredGeoData: function() {
               if (this.filteredGeoData) {
-                  this.filteredData = this.filteredGeoData;
+                  this.filteredData = JSON.parse(JSON.stringify(this.filteredGeoData));
               }  
             },
             focusedInfoCard: function() {
