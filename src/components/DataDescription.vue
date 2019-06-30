@@ -4,6 +4,7 @@
         <div class="single-data-point">City: {{dataPoint.city}} </div>
         <div class="single-data-point">Population: {{dataPoint.population}} </div>
         <div class="single-data-point">Year: {{year}} </div>
+         <div class="single-data-point">Type: {{dataPoint.type}} </div>
         <div class="single-data-point">Source: {{dataPoint.source}} </div>
     </div>
 </template>

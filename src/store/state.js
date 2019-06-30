@@ -1,5 +1,6 @@
 const state = {
     geoData: [],
+    title: null,
     focusedMapPoint: {},
     singleMapPointFocus: false,
     focusedInfoCard: null,

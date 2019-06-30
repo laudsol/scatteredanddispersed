@@ -1,4 +1,5 @@
-export const SET_GEO_DATA = 'SET_GEO_DATA' 
+export const SET_GEO_DATA = 'SET_GEO_DATA'
+export const SET_TITLE = 'SET_TITLE' 
 export const SET_YEAR_FILTER = 'SET_YEAR_FILTER'
 
 export const SET_FOCUSED_MAP_POINT = 'SET_FOCUSED_MAP_POINT'

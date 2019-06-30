@@ -39,7 +39,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setGeoData: 'SET_GEO_DATA'
+      setGeoData: 'SET_GEO_DATA',
+      setTitle: 'SET_TITLE'
       }),
       ...mapActions({
         getGeoData: 'GET_GEO_DATA',
@@ -47,8 +48,9 @@ export default {
       }),
     callGeoData() {
       this.getGeoData().then(res => {
-        if(res && res.data) {
-          const dataWithDisplayLabels = this.addDisplayLabels(res.data)
+        if(res && res.data.formattedGeoData) {
+          const dataWithDisplayLabels = this.addDisplayLabels(res.data.formattedGeoData)
+          this.setTitle(res.data.title)
           this.getLatLong(dataWithDisplayLabels);  
         }
       })
