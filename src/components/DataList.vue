@@ -43,13 +43,13 @@ import DataDescription from './DataDescription.vue'
                 return obj.label.slice(0, obj.label.indexOf('focus'));
             },
             focusOnMapPoint(dataPoint) {
-                // needed to remove the 'focus' string from label if exists
                 let cleanedDataPoint = dataPoint;
 
                 if (this.dataCardInFocus){
                     this.filteredData = this.filteredData.map(obj => {
                         let updatedLabel = obj.label;
                         if (obj.label.indexOf('focus') > -1) {
+                            // remove the focus label when setting FocusedMapPoint in global store to avoid contaminating the store
                             updatedLabel = this.getNumericLabel(obj);
                             cleanedDataPoint = {
                                 ...cleanedDataPoint,
@@ -71,6 +71,7 @@ import DataDescription from './DataDescription.vue'
         watch: {
             filteredGeoData: function() {
               if (this.filteredGeoData) {
+                  // deep clone to avoid mutating the global store when this.filteredData is changed inside this component
                   this.filteredData = JSON.parse(JSON.stringify(this.filteredGeoData));
               }  
             },
@@ -78,6 +79,7 @@ import DataDescription from './DataDescription.vue'
                 if (this.focusedInfoCard !== null) {
                      this.filteredData = this.filteredData.map((obj, i) => {
                         if (obj.label.indexOf('focus') > -1 && obj.label !== this.focusedInfoCard) {
+                            // remove old focus label from inactive datapoint
                             obj.label = this.getNumericLabel(obj)
                         } else if (obj.label === this.focusedInfoCard) {
                             // changing the label will make the component re render since 'label' is the key -- needs to be undone for list focus reset

@@ -28,12 +28,14 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
             setMapData() {
                 const mapElement = document.getElementById("the-one-true-map")
                 let zoom = 5
+                // map should load to focus on the first datapoint from the API. Need to differentiate between zooming on the same point of focus or switching to reflect the coordinates from a selected data card
                 const center = this.useLastCoordinates
                     ? this.lastCoordinates
                     : this.singleMapPointFocus
                         ? this.focusedMapPoint.coordinates
                         : this.filteredGeoData[0].coordinates
 
+                // last zoom used to control center when zooming in and out
                 if (this.lastZoom > 0) {
                     zoom = this.lastZoom
                     this.lastZoom = 0
@@ -58,12 +60,13 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
                 }
 
                 markers.map(marker => {
-                        marker.addListener('click', () => {
-                            this.setFocusedInfoCard(marker.label)
+                    marker.addListener('click', () => {
+                        this.setFocusedInfoCard(marker.label)
                     })
                 })
 
                 map.addListener('zoom_changed', () => {
+                    // once the map has zoomed to a location based on a user selecting a data card, reset the functionality so user not stuck on that location
                     if (this.singleMapPointFocus) {
                         this.setFocusedMapPoint({})
                         this.setMapFocus(false)

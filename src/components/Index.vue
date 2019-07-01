@@ -49,8 +49,8 @@ export default {
     callGeoData() {
       this.getGeoData().then(res => {
         if(res && res.data.formattedGeoData) {
-          const dataWithDisplayLabels = this.addDisplayLabels(res.data.formattedGeoData)
           this.setTitle(res.data.title)
+          const dataWithDisplayLabels = this.addDisplayLabels(res.data.formattedGeoData)
           this.getLatLong(dataWithDisplayLabels);  
         }
       })
@@ -78,11 +78,9 @@ export default {
                 coordinates: res.data.results[0].geometry.location
               }
               resolve(dataPoint)
-              return dataPoint
             })
           } else {
             resolve(dataPoint)
-            return dataPoint
           }
         })
       })
@@ -97,7 +95,3 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
